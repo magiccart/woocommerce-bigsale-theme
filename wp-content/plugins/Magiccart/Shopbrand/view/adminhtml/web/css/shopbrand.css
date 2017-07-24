@@ -1,0 +1,59 @@
+.ad-brand img.img-brand{
+    width: 270px;
+    height: 110px;
+    display: block;
+    margin: 5px 0px;
+    border: 1px dotted #8CCFFA;
+}
+.magiccart-brand-grid th{
+    font-weight: bold;
+    text-align: center;
+    background: #2A80B9;
+    color: #fff !important;
+}
+.magiccart-brand-grid tr{
+    text-align: center;
+}
+.brand-publish,
+.brand-unpublish,
+.del-shopbrand {
+    position: relative;
+}
+ 
+.brand-publish:before,
+.brand-unpublish:before,
+.del-shopbrand:before {
+   	font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+   	font-size: 25px;
+    padding-right: 0.5em;
+    position: absolute;
+    top: 10px;
+    
+}
+.brand-publish:before{
+	 content: "\f06e";
+	 color: #2A80B9;
+     left: 30px;
+}
+.brand-unpublish:before{
+	 content: "\f070";
+	color: #8CCFFA;
+    left: 30px;
+}
+.del-shopbrand:before{
+	 content: "\f05c";
+	 color: #FF4050;
+     left: 20px;
+}
+.magiccart-brand-grid td.column-image{
+    padding: 8px 10px 0px 10px;
+}
+.magiccart-brand-grid .column-action{
+    width: 6%;
+}
+.magiccart-brand-grid .column-published{
+    width: 8%;
+}

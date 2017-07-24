@@ -1,0 +1,40 @@
+<?php 
+    $page   = $_GET['page'];  
+    $xhtml  = '';
+ 
+    foreach ($this->_items  as $key => $value) {
+        $avatar = isset($value['avatar'] ) ? $value['avatar']  : '';
+        $xhtml .= '<td class="td-slider">
+                        <div class="img-info">
+                            <a href="?page=' . $page . '&action=edit&group='. $key .'">
+                                <img class="img-avatar" src="'. $avatar .'" />
+                            </a>
+                            <div class="info-slider">
+                                <span class="name"><b> ('. $value['total'] .')</b> '. $value['name'] .'</span>
+
+                                <a href="?page=' . $page . '&action=delete&group='. $key .'">
+                                    <i class="remove"></i>
+                                </a>
+                                <a href="?page=' . $page . '&action=edit&group='. $key .'">
+                                    <i class="edit"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>';
+    }
+?>
+<div class='wrap'>
+    <h1>
+        Magiccart Slider
+        <a class="page-title-action" href="?page=<?php echo $page; ?>&action=add<?php echo "&modul=magicslider&view=newslider"; ?>"> New </a>
+    </h1>
+    <form method="post" name="add-text" action='' enctype="multipart/form-data">
+         <table class="form-table">
+            <tbody>
+                <tr>
+                    <?php echo $xhtml; ?>
+                </tr>
+            </tbody>
+       </table>
+    </form>
+</div>

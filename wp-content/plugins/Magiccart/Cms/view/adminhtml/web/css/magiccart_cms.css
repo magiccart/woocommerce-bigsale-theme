@@ -1,0 +1,28 @@
+@CHARSET "ISO-8859-1";
+.magiccart-block-grid th{
+	font-weight: bold;
+	background: #2A80B9;
+    color: #fff !important;
+}
+.magiccart-block-grid th, .magiccart-block-grid td{
+	text-align: center;
+}
+.magiccart-block-grid #stt , .magiccart-block-grid .stt{
+	width: 6%;
+}
+.magiccart-block-grid .stt{
+	font-weight: 500;
+}
+.magiccart-block-grid #action , .magiccart-block-grid .action{
+	width: 6%;
+}
+.magiccart-block-grid #published , .magiccart-block-grid .published{
+	width: 5%;
+}
+.magiccart-block-grid #short_code , .magiccart-block-grid .short_code{
+	width: 12%;
+}
+.magiccart-block-grid .short_code input{
+	width: 100%;
+	text-align: center;
+}

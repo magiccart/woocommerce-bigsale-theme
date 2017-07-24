@@ -1,0 +1,17 @@
+<?php
+$this->prepare_items();
+$page    = $_GET['page'];
+$linkAdd = "?page={$page}&action=add&modul=cms&controller=block&view=newblock";
+?>
+<div class='wrap'>
+    <h1>
+        Magiccart Block
+        <a class="page-title-action"  href="<?php echo $linkAdd; ?>" >New</a>
+    </h1>
+    <form method='post' action='' name='' id=''>
+        <?php
+            $this->search_box('Search', 'alothemes-search');
+            $this->display();
+        ?>
+    </form>
+</div>

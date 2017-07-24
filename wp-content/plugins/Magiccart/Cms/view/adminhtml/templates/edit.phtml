@@ -1,0 +1,31 @@
+<?php 
+	$data 	= $this->getData();   
+	$title  = $this->textbox('title', $data['title'], array('class' => 'regular-text', 'style' => 'width: 500px;'));
+    $page   = $_GET['page'];  
+    $message        = isset($data['message']) ? $data['message'] : '';
+?>
+
+<div class="wrap">
+    <h1>
+        NEW
+        <a class="page-title-action" href="?page=<?php echo $page. "&block=gird&modul=cms&model=collection&view=gird"; ?>"> List </a>
+        <a class="page-title-action" href="?page=<?php echo $page; ?>&action=add<?php echo "&modul=cms&controller=block&view=newblock"; ?>"> New </a>
+    </h1>
+    <?php echo $message; ?>
+     
+    <form method="post" name="add-text" action='' enctype="multipart/form-data">
+         <table class="form-table">
+            <tbody>
+                <tr>
+                    <th><label> Title <span style="color:red;">*</span> : </label></th>
+                    <td><?php echo $title; ?></td>
+                </tr>
+                <tr>
+                    <th><label>Content <span style="color:red;">*</span> : </label></th>
+                    <td><?php wp_editor(wp_kses_post($data['content']), 'content') ?></td>
+                </tr>
+            </tbody>
+       </table>
+        <input type="submit" name="submit" id="mp-btn-change" class="button button-primary" value="Save Changes">
+    </form>
+</div>

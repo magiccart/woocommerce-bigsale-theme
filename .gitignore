@@ -1,0 +1,12 @@
+
+# Ignore All
+/*
+!/.gitignore
+!/wp-content/
+/wp-content/*
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/Magiccart
+!/wp-content/themes/
+/wp-content/themes/*
+!/wp-content/themes/bigsale*

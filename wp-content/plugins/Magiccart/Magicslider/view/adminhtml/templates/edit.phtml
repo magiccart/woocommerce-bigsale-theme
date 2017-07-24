@@ -1,0 +1,76 @@
+<?php 
+	$page           = $_GET['page'];  
+    $data           = $this->getData();
+    $groupName      = isset($data['group']) ? $data['group'] : '' ;
+    $content        = isset($data['content']) ? $data['content'] : array() ;
+    $message        = isset($data['message']) ? $data['message'] : '';
+    $keyGroup       = isset($data['key-group']) ? $data['key-group'] : '';    
+    $xhtml= "";
+    
+    foreach ($content as $key => $value) {
+        $checked = "";
+        if($value['status'] != '0'){
+             $checked = "checked='checked'";
+        }
+        
+        $xhtml .= '<li class="grid-item" data-id="'. $value['id'] .'">
+                        <a target="_blank" class="mg-ifame" href="http://binh/bigsale/wp-admin/upload.php?item='. $value['id'] .'">
+                            <img class="img-avatar" src="'. $value['src'] .'" />
+                        </a>
+                        <div class="image-options">
+                            <div>
+                                <input class="text_area title-img" type="text" name="title['. $value['id'] .']" value="'. stripslashes($value['title']) .'" placeholder="Title">
+                            </div>
+                            <div class="description-block">
+                                <textarea name="im_description['. $value['id'] .']" placeholder="Caption">'. stripslashes($value['description']) .'</textarea>
+                            </div>
+                            <div class="link-block">
+                                <input class="text_area" type="text" name="img-herf['. $value['id'] .']" placeholder="URL" value="'. stripslashes($value['href']) .'">
+                            </div>
+                            <div class="img-show">
+                                <label class="lbl-show">Hide image : </label>
+                                <input class="link_target" '. $checked .' type="checkbox" name="show-img['. $value['id'] .']">
+                            </div>
+                            <div class="remove-image-container">
+                                <a class="button remove-image" href="?page=' . $page . '&action=delete&key-group='. $keyGroup .'&group-item='. $key .'">Remove Image</a>
+                            </div>
+                        </div>
+                        <input class="src-img" type="text" name="img-src['. $value['id'] .']" value="'. $value['src'] .'">
+                        <input class="id-img" type="text" name="ids['. $value['id'] .']" value="'. $value['id'] .'">
+                    </li>';
+    }
+    
+?>
+
+<div class="wrap">
+    <?php echo $message; ?>
+    <h1>
+        NEW
+        <a class="page-title-action" href="?page=<?php echo $page. "&block=gird&modul=magicslider&model=collection&view=gird"; ?>"> Grid </a>
+        <a class="page-title-action" href="?page=<?php echo $page; ?>&action=add<?php echo "&modul=magicslider&view=newslider"; ?>"> New </a>
+    </h1>
+    <form method="post" name="add-text" action='' id="form-slide" enctype="multipart/form-data">
+                <ul class="menu-slide">
+                    <li class="name-slide">
+                        <label>
+                            <?php echo $groupName; ?>
+                            <i class="edit-name" ></i>
+                        </label>
+                        <input type="text" name="group-slider" value="<?php echo $groupName; ?>" />
+                    </li>
+                    <li class="up-img"> 
+                        <input id="upload-btn-slider" type="button" name="upload-btn" value="Add Image Slide" class="button-img-avatar button" />
+                    </li>
+                    <li>
+                        <input type="submit" name="submit" id="mp-btn-change" class="button button-primary" value="Save Changes">
+                    </li>
+                </ul>
+                
+                <ul id="sortable" class="grid-img sortable">
+                    <?php echo $xhtml; ?>
+                </ul>
+    </form>
+
+
+
+

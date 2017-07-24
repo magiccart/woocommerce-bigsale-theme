@@ -1,0 +1,62 @@
+<?php 
+	$options = $this->getOptions(); 
+?>
+<div class="box-content categories-type">
+    <div class="alo-content-<?php echo rand(0,9999999); ?> magicproduct autoplay">
+        <div class="block-products auto-height">
+            <div class="block-title-tabs clearfix">
+                <?php 
+                    echo '<h3 class="category_activated">' . $this->getData('title') . '</h3>' ;
+                ?>
+                <ul class="magictabs" data-ajax='{"filter" :"<?php echo $this->getData('type') ?>", "number":"<?php echo $this->getData('number') ?>", "cart":"<?php echo $this->getData('cart') ?>", "compare":"<?php echo $this->getData('compare') ?>", "wishlist":"<?php echo $this->getData('wishlist') ?>", "review":"<?php echo $this->getData('review') ?>"}' >
+
+                    <?php 
+                        $categories     = $this->getData('categories');
+                        $loaded         = " loaded ";
+                        if($this->getData('ajax_load') != "no") $loaded = "";
+                           
+                        foreach($categories as $key => $value){
+                            $activated  = "";
+                            if($key == $this->getData('defaultSlug')){
+                                $activated = " activated loaded";
+                            } 
+                            echo '<li class="item '. $activated . $loaded .'" data-type="'.
+                                    $key .'"><span class="title">' . $value  . '</span></li>';
+                        }                
+                    ?>
+                </ul>
+            </div>
+            <div class="block-content clearfix">
+               
+                    	<?php 
+                            if($this->getData('shortcode_left') != "0"){
+                                echo '<div class="banner-featured"><div class="left-category-editor">';
+                                     do_shortcode('[magiccartBlock text=' .$this->getData('shortcode_left') . ']');
+                                echo '</div></div>';
+                            }
+                        ?>
+                    
+                        <div class="ajax_loading" style="display:none" data-url="<?php echo admin_url( 'admin-ajax.php' ); ?>"  data-action="magiccart_categories"></div>
+                    <div class="content-products-featured">
+                        <div class="content-products col-lg-7 col-md-7" <?php foreach($options as $key => $value){?>
+                                                               data-<?php echo $key; ?> = '<?php echo $value ?>'
+                                                       <?php } ?> > 
+                            <?php
+                                foreach($this->_products as $key => $collection){
+                                    include "categories/grid.phtml"; 
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <?php 
+                        if($this->getData('shortcode_bottom') != "0"){
+                            echo '<div class="bottom-category-editor">';
+                                 do_shortcode('[magiccartBlock text=' .$this->getData('shortcode_bottom') . ']');
+                            echo '</div>';
+                        }
+                    ?>
+               
+            </div><!-- block-content -->
+        </div>    
+    </div>
+</div>

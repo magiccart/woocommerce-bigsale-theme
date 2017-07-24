@@ -1,0 +1,57 @@
+<?php
+    $message = $this->getData('message');
+    $pages = array();
+        foreach (get_pages() as  $value) {
+            $pages[$value->ID] = $value->post_title;
+        }
+       /* echo "<pre>";
+    print_r(get_post(2));
+    echo "</pre>";*/
+   /* global $wpdb;
+    $posts = $wpdb->query( "SELECT `post_content` FROM `wp_posts` WHERE `id` ==" );*/
+    
+?>
+<div class='wrap'>
+    <h1>
+        Magiccart Import Export
+    </h1>
+    <?php echo $message; ?>
+    <form method="post" action='' enctype="multipart/form-data">
+         <table class="form-table">
+            <tbody>
+                <tr>
+                    <th><label> Select <span style="color:red;">*</span> : </label></th>
+                    <td>
+						<select name="action" id="select_action">
+                            <option value="export">Export</option>
+							<option value="import">Import</option>
+						</select>
+					</td>
+                </tr>
+                <tr>
+                    <th><label> Data <span style="color:red;">*</span> : </label></th>
+                    <td>
+                        <input name="model[]" checked type="checkbox" value="block" /> Block<br />
+                        <input name="model[]" checked type="checkbox" value="slider" /> Slider<br />
+                        <input name="model[]" checked type="checkbox" value="brands" /> Brands<br />
+                        <input name="model[]" checked type="checkbox" value="redux" /> Redux<br />
+                        <div class="model-images"><input name="model[]"  type="checkbox" value="images" /> Images<br /></div>
+					</td>
+                </tr>
+                <tr>
+                    <th><label> Home <span style="color:red;">*</span> : </label></th>
+                    <td>
+                        <select name="page" id="select_page">
+                            <?php
+                                foreach ($pages as $id => $name) {
+                                    echo '<option value="'. $name .'_'. $id .'"> '. $name .' </option>';
+                                }
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+       </table>
+       <input type="submit" name="submit" id="mp-btn-change" class="button button-primary" value="Save Changes">
+    </form>
+</div>

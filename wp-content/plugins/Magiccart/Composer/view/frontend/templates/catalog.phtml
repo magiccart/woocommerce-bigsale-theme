@@ -1,0 +1,70 @@
+<?php 
+    $options = $this->getOptions();  
+?>
+<div class="box-content catalog-type megashop">
+    <div class="alo-content-<?php echo rand(0,9999999); ?> magicproduct autoplay">
+        <div class="block-products auto-height">
+            <div class="block-title-tabs clearfix">
+                <?php 
+                    echo '<h3 class="category_activated">' . $this->getData('category_activated_name') . '</h3>' ;
+                ?>
+                <span class="toggle-tab mobile" style="display:none"><i class="fa fa-bars"></i></span>
+                <ul class="magictabs toggle-content" data-ajax='{"filter" :"<?php echo $this->getData('category_activated_slug') ?>", "number":"<?php echo $this->getData('number') ?>", "cart":"<?php echo $this->getData('cart') ?>", "compare":"<?php echo $this->getData('compare') ?>", "wishlist":"<?php echo $this->getData('wishlist') ?>", "review":"<?php echo $this->getData('review') ?>"}'>
+
+                    <?php 
+                        $loaded     = " loaded ";
+                        if($this->getData('ajax_load') != "no") $loaded = "";
+                        $types = $this->getData('product_collection');
+                        foreach($types as $key => $value){
+                            $activated  = "";
+                            if($key == array_search($this->getData('product_activated'), $types)){
+                                $activated = " activated loaded";
+                            } 
+                            echo  '<li class="item'. $activated . $loaded .'" data-type="'.
+                                    $value .'"><span class="title">' . $this->get_type_name($value)  . '</span></li>';
+                        }    
+
+                        $categories = $this->getData('categoriesName');
+                        if($categories){
+                            foreach($categories as $key => $value){
+                               echo '<li class="item' . $loaded .'" data-type="'.
+                                        $key .'"><span class="title">' . str_replace('_', ' ', $value) . '</span></li>';
+                            } 
+                        }
+                ?>
+                </ul>
+            </div>
+            <div class="block-content catalog clearfix">
+                <!-- <div class="row"> -->
+                        <?php 
+                            if($this->getData('shortcode_left') != "0"){
+                                echo '<div class="banner-featured"><div class="left-category-editor">';
+                                     do_shortcode('[magiccartBlock text=' .$this->getData('shortcode_left') . ']');
+                                echo '</div></div>';
+                            }
+                        ?>
+                    
+                        <div class="ajax_loading" style="display:none" data-url="<?php echo admin_url( 'admin-ajax.php' ); ?>"  data-action="magiccart_catalog"></div>
+                    <div class="content-products-featured">
+                        <div class="content-products" <?php foreach($options as $key => $value){?>
+                                                               data-<?php echo $key; ?> = '<?php echo $value ?>'
+                                                       <?php } ?> > 
+                            <?php
+                                foreach($this->_products as $key => $collection){ 
+                                    include "catalog/grid.phtml"; 
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <?php 
+                        if($this->getData('shortcode_bottom') != "0"){
+                            echo '<div class="bottom-category-editor">';
+                                 do_shortcode('[magiccartBlock text=' .$this->getData('shortcode_bottom') . ']');
+                            echo '</div>';
+                        }
+                    ?>
+                <!-- </div> --> <!-- end row -->
+            </div><!-- block-content -->
+        </div> 
+    </div>
+</div>

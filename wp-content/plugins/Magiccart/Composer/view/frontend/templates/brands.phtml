@@ -1,0 +1,42 @@
+<?php 
+	$options = $this->getOptions();
+	$selector = 'alo-content-'.rand(0,999999999);
+?>
+<div class="<?php echo $selector ?>">
+	<div class="shopbrand" <?php foreach($options as $key => $value){?>
+                                           data-<?php echo $key;   ?>  = '<?php echo $value; ?>'
+                                   <?php } ?> >
+				<?php 
+                     foreach($this->_brands as  $value){
+                     	$type 	= substr($value['attr-type'], 3);
+                     	$term 	= $value['term'];
+                     	$img 	= "<img src='{$value['img']}' alt='{$value['name']}' />";
+                     	$url 	= '#';
+                     	
+
+                     	if(trim($value['url']) != ""){
+                     		$url = $value['url'];
+                     	}else if($term != -1){
+                     		$objTerm = get_terms(array(
+							    'taxonomy' => $value['attr-type'],
+							    'slug' => $term,
+							));
+                     		$url = get_term_link($term, $value['attr-type']);
+                     	}
+                     	
+                 		echo "<div class='item type-product'>" . 
+                           		'<a href="'. $url .'"><div class="img-brand">' . $img . '</div></a>' .
+                           		"<div class='name'>". $value['name'] ."</div>"
+                         	. "</div>";
+                     }
+                ?>
+    </div>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	(function ($) {
+		var shopbrand  = $('.<?php echo $selector ?> .shopbrand');
+		if(shopbrand.length) $('head').append(magicproduct(shopbrand, '.item'));
+    })(jQuery);
+});
+</script>

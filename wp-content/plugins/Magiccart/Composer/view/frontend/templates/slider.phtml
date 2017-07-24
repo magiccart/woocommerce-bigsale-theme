@@ -1,0 +1,31 @@
+<?php 
+	$options = $this->getOptions();
+	$selector = 'alo-content-'.rand(0,999999999);
+?>
+<div class="box-slider magicslider">
+  <div class="<?php echo $selector ?>">
+  	<div class="magicslider home-slider" <?php foreach($options as $key => $value){?>
+                                             data-<?php echo $key;   ?>  = '<?php echo $value; ?>'
+                                     <?php } ?> >
+  				<?php 
+          
+            foreach($this->_sliders as  $value){
+             	echo "<div class='item'>" 
+                      . '<a href="'. $value['href'] .'"><img alt="'.  $value['title'] .'" src="'.  $value['src'] .'" /></a>'
+               			  . stripslashes($value['description'])
+  		             . "</div>";
+            }
+          ?>
+          
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	(function ($) {
+		var magicslider  = $('.<?php echo $selector ?> .magicslider');
+		if(magicslider.length) $('head').append(magicproduct(magicslider, '.item'));
+    })(jQuery);
+});
+</script>
