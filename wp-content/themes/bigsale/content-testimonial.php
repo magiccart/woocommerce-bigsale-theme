@@ -1,4 +1,15 @@
-<?php 
+<?php
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-15 21:47:35
+ * @@Modify Date: 2017-08-15 21:53:11
+ * @@Function:
+ */
+
 $messager 	= "";
 $name 		= '';
 $email 		= '';
@@ -48,9 +59,9 @@ if(count($_POST) > 0){
 			}
 		}
 		wp_insert_post( $my_post );
-		$messager 	= "<div class='woocommerce-message'>" . __('Your review has been added ! ', 'alothemes') . "</div>";
+		$messager 	= "<div class='message error woocommerce-message'>" . __('Your review has been added!', 'alothemes') . "</div>";
 	}else{
-		$messager 	= "<div class='woocommerce-error'>" . __('please enter full data !', 'alothemes') . "</div>";
+		$messager 	= "<div class='message error woocommerce-error'>" . __('Please enter full data!', 'alothemes') . "</div>";
 		$name 		= $_POST['name'];
 		$email 		= $_POST['email'];
 		$text 		= $_POST['text'];
@@ -109,23 +120,23 @@ if(is_front_page()){
     <?php echo $messager; ?>
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="fieldset"> 
-        	<label for="name"> <?php echo __('Contact Name', 'alothemes') ?> <span class="required">*</span> </label>
+        	<label for="name"><?php echo __('Contact Name', 'alothemes') ?><span class="required">*</span></label>
         		<div class="input-box"> 
         			<input type="text" class=" input-text required-entry" value="<?php echo $name; ?>" name="name" id="name">
 				</div> 
-			<label for="company"> <?php echo __('Company', 'alothemes') ?> </label>
+			<label for="company"><?php echo __('Company', 'alothemes') ?></label>
 				<div class="input-box"> 
 					<input type="text" class=" input-text" value="<?php echo $company; ?>" name="company" id="company">
 				</div> 
-			<label for="email"> <?php echo __('Email', 'alothemes') ?> <span class="required">*</span> </label>
+			<label for="email"><?php echo __('Email', 'alothemes') ?><span class="required">*</span></label>
 				<div class="input-box"> 
 					<input type="text" class=" validate-email input-text required-entry" value="<?php echo $email; ?>" name="email" id="email">
 				</div> 
-			<label for="website"> <?php echo __('Website URL', 'alothemes') ?> </label>
+			<label for="website"><?php echo __('Your website', 'alothemes') ?></label>
 				<div class="input-box"> 
 					<input type="text" class="validate-clean-url input-text" value="<?php echo $website; ?>" name="website" id="website">
 				</div> 
-			<label for="image"> <?php echo __('Image', 'alothemes') ?> </label>
+			<label for="image"><?php echo __('Image', 'alothemes') ?></label>
 				<div class="input-box"> 
 					<input type="file" class="input-file" name="image" id="image">
 				</div>
@@ -139,13 +150,13 @@ if(is_front_page()){
 			            echo "<input id='mc-rating' name='rating' type='radio' value='$i' /><b>$i Star</b>&nbsp;&nbsp;&nbsp;";
 			        }
 				?>	
-			<label for="text"> Text <span class="required">*</span> </label>
+			<label for="text"><?php echo __('Text', 'alothemes') ?><span class="required">*</span></label>
 				<div class="input-box"> 
-					<textarea class=" required-entry textarea" cols="15" rows="2" title="Text" name="text" id="text"><?php echo $text; ?></textarea>
+					<textarea class=" required-entry textarea" cols="15" rows="2" title="<?php echo __('Text', 'alothemes') ?>" name="text" id="text"><?php echo $text; ?></textarea>
 				</div>
 			<div class="buttons-set"> 
-				<button class="button" title="Submit Review" type="submit">
-					<span><span>Submit Testimonial</span></span>
+				<button class="button" title="<?php echo __('Submit', 'alothemes') ?>" type="submit">
+					<span><span><?php echo __('Submit', 'alothemes') ?></span></span>
 				</button>
 			</div>
 		</div>

@@ -3,10 +3,7 @@ namespace Magiccart\Composer\Block\Post;
 use Magiccart\Composer\Block\Shortcode;
 
 class Picturecategory extends Shortcode{
-    
-    // **********************************************************************//
-    // alothemes Picture Category
-    // **********************************************************************//
+
     public function category_picture( $atts, $content = null ){
         $listCat = "";
         $image = wp_get_attachment_image_src($atts['img_src'],'full');
@@ -14,13 +11,13 @@ class Picturecategory extends Shortcode{
         $picture = "<img src='{$image[0]}' />";
         if($atts["parent"] != ""){
             $listCat = "<ul>";
-            foreach (parent::get_name_category() as $value){
+            foreach ($this->get_name_category() as $value){
                 if($value->term_id == $atts["parent"]){
                     $listCat .= "<li class='title'>" . $value->name ."</li>";
                     break;
                 }
             }
-            foreach (parent::get_name_category($atts["parent"]) as $value){
+            foreach ($this->get_name_category($atts["parent"]) as $value){
                 $listCat .= "<li>" . $value->name ."</li>";
             }
             $listCat .= "</ul>";
@@ -31,4 +28,6 @@ class Picturecategory extends Shortcode{
         </div>";
         return $content;
     }
+
 }
+

@@ -88,7 +88,7 @@ namespace Magiccart\Shopbrand\Block\Adminhtml\Brand;
     }
     public function column_name($item){
         $page       = $_GET['page'];
-        $xhtml      = "<a href='?page={$page}&key={$item['key']}&modul=shopbrand&action=edit'>{$item['name']} </a>";
+        $xhtml      = "<a href='?page={$page}&key={$item['key']}&module=shopbrand&action=edit'>{$item['name']} </a>";
         return $xhtml;
     }
     public function column_attributes($item){
@@ -124,4 +124,4 @@ namespace Magiccart\Shopbrand\Block\Adminhtml\Brand;
     	$xAction = "<a class='del-shopbrand' title='delete' href='?page={$page}&action=delete&key={$item['key']}' ></a>";
     	return $xAction;
     }
-}
+}

@@ -1,0 +1,25 @@
+<?php 
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-13 18:45:34
+ * @@Modify Date: 2017-08-13 23:34:05
+ * @@Function:
+ */
+
+$classer = $this->getData('el_class');
+?>
+<div class="tnp tnp-widget-minimal <?php echo $classer?>">
+    <form action="<?php echo esc_attr(home_url('/')) . '?na=s';  ?>" method="post" id="newsletter-validate-detail">
+            <span class="title"><?php echo __('Newsletter', 'alothemes'); ?>:</span>
+            <div class="input-box">
+                <input type="hidden" name="nr" value="widget-minimal"/>
+                <input type="email" required name="ne" id="newsletter" value="" title="<?php echo __('Sign up for our newsletter', 'alothemes'); ?>" placeholder="<?php echo __('Your email', 'alothemes'); ?>" class="tnp-email">
+            </div>
+             <button type="submit" title="Subscribe" class="tnp-submit"><?php echo __('Subscribe', 'alothemes'); ?></button>
+    </form>
+</div>
+

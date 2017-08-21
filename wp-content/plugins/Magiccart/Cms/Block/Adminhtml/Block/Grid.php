@@ -1,4 +1,14 @@
 <?php
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-03 23:54:46
+ * @@Modify Date: 2017-08-03 23:55:00
+ * @@Function:
+ */
 namespace Magiccart\Cms\Block\Adminhtml\Block;
 use Magiccart\Cms\Model\Block\Collection;
 
@@ -84,15 +94,13 @@ use Magiccart\Cms\Model\Block\Collection;
     }
     public function column_name($item){
         $page       = $_GET['page'];
-        $xhtml      = "<a href='?page={$page}&text={$item['key']}&action=edit'>{$item['name']} </a>";
+        $xhtml      = "<a href='?page={$page}&identifier={$item['key']}&action=edit'>{$item['name']} </a>";
         return $xhtml;
     }
     public function column_short_code($item){
-        if($item['status']){
-            return "<input type='text' value='[magiccartBlock text={$item['key']}]' />";
-        }else{
-            return "<input type='text' disabled='disabled' value='[magiccartBlock text={$item['key']}]' />";
-        }
+        $disabled = $item['status'] ? '' : 'disabled="disabled"';
+        // return "<input type='text' $disabled value='[magiccart_shortcode identifier={$item['key']}]' />";
+        return '<textarea ' . $disabled . '>[magiccart_shortcode class="Magiccart\\\\Cms\\\\Block\\\\Block" identifier="' .$item['key'] . '"]</textarea>';
     }
     public function column_published($item){
         if($item['status']){
@@ -104,14 +112,15 @@ use Magiccart\Cms\Model\Block\Collection;
         }
         $page  = $_GET['page'];
         
-        $xStatus = "<a href='?page={$page}&status={$action}&text={$item['key']}' ><img src='{$img}' /></a>";
+        $xStatus = "<a href='?page={$page}&status={$action}&identifier={$item['key']}' ><img src='{$img}' /></a>";
         return $xStatus;
     }
     
     public function column_action($item){
         $img = CMS_IMAGES . 'delx.png';
         $page = $_GET['page'];
-        $xAction = "<a href='?page={$page}&action=delete&text={$item['key']}' ><img src='{$img}' /></a>";
+        $xAction = "<a href='?page={$page}&action=delete&identifier={$item['key']}' ><img src='{$img}' /></a>";
         return $xAction;
     }  
 }
+

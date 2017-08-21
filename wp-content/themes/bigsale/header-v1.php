@@ -141,7 +141,7 @@
 						 ?>
 					</div>
 
-					 <div class="magicmenu clearfix">                                   
+					<div class="magicmenu clearfix">                                   
 						<?php  
 							if ( has_nav_menu( 'top-menu' ) ) {
 								wp_nav_menu(array(
@@ -151,7 +151,7 @@
 								));  
 							}
 						?>	
-					 </div>
+					</div>
 
 					<div id="mobileSidenav" class="sidenav menu-mobile">
 						<a href="javascript:void(0)" class="closebtn">&times;</a>
@@ -175,4 +175,28 @@
 
 
 
+<?php
+$page_id = 2643;
+     if($page_id)
+        {
+            $page=get_post($page_id);
+
+            if($page)
+            {
+                $content=apply_filters('the_content', $page->post_content);
+
+                $content = str_replace(']]>', ']]&gt;', $content);
+
+
+                $shortcodes_custom_css = get_post_meta( $page_id, '_wpb_shortcodes_custom_css', true );
+
+                // echo $shortcodes_custom_css;
+
+                wp_reset_postdata();
+
+                echo  $content;
+            }
+        }
+?>
+<style type="text/css" add><?php echo $shortcodes_custom_css; ?></style>
 

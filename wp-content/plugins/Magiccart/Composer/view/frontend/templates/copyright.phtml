@@ -1,0 +1,32 @@
+<?php 
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-13 18:45:34
+ * @@Modify Date: 2017-08-13 23:31:05
+ * @@Function:
+ */
+
+$classer = $this->getData('el_class');
+?>
+<div id="footer-copyright <?php echo $classer ?>">
+    <div class="container">
+        <div class="license">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <address>
+                        &copy;2017 Copyright. All rights reserved.Design by <a class="active" href="<?php echo home_url(); ?>">Bigsale</a>
+                    </address>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="paypal">
+                        <img alt="payment" title="payment" src="<?php  echo get_stylesheet_directory_uri(); ?>/images/payment.jpg">
+                    </div>
+                </div>
+            </div><!-- end row -->
+        </div>
+    </div><!--end container-->
+</div>

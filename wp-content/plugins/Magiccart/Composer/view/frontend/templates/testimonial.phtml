@@ -1,72 +1,64 @@
 <?php 
 	$options  = $this->getOptions();
 	$selector = 'alo-content-'.rand(0,999999999);
-?>
-
+	?>
 <div class="<?php echo $selector ?> container">
-  <div class="testimonial clearfix">
-    <div class="block-title-testi">
-      <h3 class="block-title title item">
-          <span><?php echo __('Testimonial ', 'alothemes'); ?></span>
-      </h3>       
-      <h3><?php echo __('Happy ', 'alothemes'); ?><span><?php echo __('Customers say... ', 'alothemes'); ?></span></h3>
-    </div>
-  	<div class="magictestimonial" <?php foreach($options as $key => $value){?>
-                                             data-<?php echo $key;   ?>  = '<?php echo $value; ?>'
-                                     <?php } ?> >
-  				<?php 
-  					while($this->_testimonial->have_posts()): $this->_testimonial->the_post();
-  					    $metaRating 	= get_post_meta(get_the_ID(), 'testimonial-rating', true);
-  					    $metaStatus 	= get_post_meta(get_the_ID(), 'testimonial-status', true);
-                $width        = ($metaRating * 2) * 10;
-  			    ?>
-
-            <div class='item'>
-              <div class="block-content">
-                <?php if($this->getData('avatar') != "no"){ ?>
-                  <div class="item-testimonial customer"> <?php the_post_thumbnail()?> </div>
-                <?php  } ?>
-                <div class="testimonial_text"> 
-                  <?php if($this->getData('name') != "no"){ ?>
-                    <p class="item-testimonial name"><?php echo get_post_meta(get_the_ID(), 'testimonial-name', true); ?></p>
-                  <?php  } ?>
-
-                  <?php if($this->getData('content') != "no"){ ?>
-                    <span class="item-testimonial sub-text"> <?php the_excerpt(); ?> </span>
-                  <?php  } ?>
-
-                  <?php if($this->getData('company') == "yes"){ ?>
-                    <span class="item-testimonial company"><?php echo get_post_meta(get_the_ID(), 'testimonial-company', true) ?></span>
-                  <?php  } ?>
-
-                  <?php if($this->getData('email') == "yes"){ ?>
-                    <span class="item-testimonial email"><?php echo get_post_meta(get_the_ID(), 'testimonial-email', true) ?></span>
-                  <?php  } ?>
-                  
-                  <?php if($this->getData('website') == "yes"){ ?>
-                    <span class="item-testimonial website"><?php echo get_post_meta(get_the_ID(), 'testimonial-website', true) ?></span>
-                  <?php  } ?>
-
-                  <?php if($this->getData('rating') == "yes"){ ?>
-                    <div class="star-rating" title="Rated <?php echo $metaRating ?> out of 5">
-                      <span style="width:<?php echo $width ?>%">
-                        <strong class="rating"><?php echo $metaRating ?></strong> out of 5
-                      </span>
-                    </div> 
-                  <?php  } ?>
-                </div>
-              </div> 
+	<div class="testimonial clearfix">
+		<div class="block-title-testi">
+			<h3 class="block-title title item">
+				<span><?php echo __('Testimonial ', 'alothemes'); ?></span>
+			</h3>
+			<h3><?php echo __('Happy ', 'alothemes'); ?><span><?php echo __('Customers say... ', 'alothemes'); ?></span></h3>
+		</div>
+		<div class="magictestimonial" <?php foreach($options as $key => $value){?>
+			data-<?php echo $key;   ?>  = '<?php echo $value; ?>'
+			<?php } ?> >
+			<?php 
+				while($this->_testimonial->have_posts()): $this->_testimonial->the_post();
+				    $metaRating 	= get_post_meta(get_the_ID(), 'testimonial-rating', true);
+				    $metaStatus 	= get_post_meta(get_the_ID(), 'testimonial-status', true);
+				         $width        = ($metaRating * 2) * 10;
+				  ?>
+			<div class='item'>
+				<div class="block-content">
+					<?php if($this->getData('avatar') != "no"){ ?>
+					<div class="item-testimonial customer"> <?php the_post_thumbnail()?> </div>
+					<?php  } ?>
+					<div class="testimonial_text">
+						<?php if($this->getData('name') != "no"){ ?>
+						<p class="item-testimonial name"><?php echo get_post_meta(get_the_ID(), 'testimonial-name', true); ?></p>
+						<?php  } ?>
+						<?php if($this->getData('content') != "no"){ ?>
+						<span class="item-testimonial sub-text"> <?php the_excerpt(); ?> </span>
+						<?php  } ?>
+						<?php if($this->getData('company') == "yes"){ ?>
+						<span class="item-testimonial company"><?php echo get_post_meta(get_the_ID(), 'testimonial-company', true) ?></span>
+						<?php  } ?>
+						<?php if($this->getData('email') == "yes"){ ?>
+						<span class="item-testimonial email"><?php echo get_post_meta(get_the_ID(), 'testimonial-email', true) ?></span>
+						<?php  } ?>
+						<?php if($this->getData('website') == "yes"){ ?>
+						<span class="item-testimonial website"><?php echo get_post_meta(get_the_ID(), 'testimonial-website', true) ?></span>
+						<?php  } ?>
+						<?php if($this->getData('rating') == "yes"){ ?>
+						<div class="star-rating" title="Rated <?php echo $metaRating ?> out of 5">
+							<span style="width:<?php echo $width ?>%">
+							<strong class="rating"><?php echo $metaRating ?></strong> out of 5
+							</span>
 						</div>
-
-  				<?php endwhile;  ?>
-    </div>
-  </div>
+						<?php  } ?>
+					</div>
+				</div>
+			</div>
+			<?php endwhile;  ?>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
-jQuery(document).ready(function(){
-	(function ($) {
-		var magictestimonial  = $('.<?php echo $selector ?> .magictestimonial');
-		if(magictestimonial.length) $('head').append(magicproduct(magictestimonial, '.item'));
-    })(jQuery);
-});
+	jQuery(document).ready(function(){
+		(function ($) {
+			var magictestimonial  = $('.<?php echo $selector ?> .magictestimonial');
+			if(magictestimonial.length) $('head').append(magicproduct(magictestimonial, '.item'));
+	    })(jQuery);
+	});
 </script>

@@ -1,0 +1,33 @@
+<?php 
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-13 18:45:34
+ * @@Modify Date: 2017-08-13 20:40:17
+ * @@Function:
+ */
+
+$classer = $this->getData('el_class');
+?>
+<div class="edit-class-cart cart-toggler <?php echo $classer ?>">
+    <div class="block-minicart">
+        <div class="toggle-tab">
+            <span class="cart-items">
+                <span class="your-cart"><?php echo __('Your Cart', 'alothemes'); ?></span>
+                <span class="cart-quantity">
+                    <?php echo WC()->cart->get_cart_contents_count() . ' ' . __('item(s)') ?>
+                </span>
+            </span>
+            <i class="fa fa-shopping-basket shopping-basket"></i>
+            
+            <div class="mg-minicart toggle-content">
+                <div class=" widget_shopping_cart_content ">
+                    <?php woocommerce_mini_cart() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

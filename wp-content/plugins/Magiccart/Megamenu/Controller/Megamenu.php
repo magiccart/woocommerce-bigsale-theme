@@ -6,7 +6,7 @@
  * @license     http://www.magiccart.net/license-agreement.html
  * @Author: DOng NGuyen<nguyen@dvn.com>
  * @@Create Date: 2017-07-24 12:11:00
- * @@Modify Date: 2017-07-24 12:11:45
+ * @@Modify Date: 2017-08-12 17:03:20
  * @@Function:
  */
 
@@ -23,6 +23,7 @@ class Megamenu extends Action{
     public function __construct(){
 
         if(is_admin()){
+            if(!$this->is_edit_menu()) return;
             new Item();
             add_action( 'admin_enqueue_scripts', array($this, 'add_admin_web'));
         }else {
@@ -31,6 +32,13 @@ class Megamenu extends Action{
             add_action( 'wp_enqueue_scripts', array($this, 'add_fontend_web') );
         }
         
+    }
+
+    protected function is_edit_menu($new_edit = null){
+        global $pagenow;
+        //make sure we are on the backend
+        // if (!is_admin()) return false;
+        return in_array( $pagenow, array( 'nav-menus.php' ) );
     }
     
     public function add_admin_web(){

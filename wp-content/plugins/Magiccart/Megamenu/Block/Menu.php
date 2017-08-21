@@ -1,15 +1,4 @@
 <?php
-/**
- * Magiccart 
- * @category    Magiccart 
- * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
- * @license     http://www.magiccart.net/license-agreement.html
- * @Author: DOng NGuyen<nguyen@dvn.com>
- * @@Create Date: 2017-07-24 12:11:00
- * @@Modify Date: 2017-07-24 13:06:18
- * @@Function:
- */ 
- 
 namespace Magiccart\Megamenu\Block;
 
 class Menu extends \Walker_Nav_Menu{
@@ -19,71 +8,71 @@ class Menu extends \Walker_Nav_Menu{
     public $_id_parent;
     public function start_lvl( &$output, $depth = 0, $args = array() ) {
         
-		$indent = str_repeat("\t", $depth);
-		if(!$depth) $this->_id_parent = $this->_id;
-		if( !$depth && get_post_meta($this->_id, '_magiccart_mega', true)){
-			$value          = get_option('magiccart_block', '');
-			$value          = json_decode($value, true);
-			
-			$editorTopDiv   = '';
-			$editorLeftDiv  = '';
-			
-			$top    = get_post_meta($this->_id, '_magiccart_block_top', true);
-			$right  = get_post_meta($this->_id, '_magiccart_block_right', true);
-			$left   = get_post_meta($this->_id, '_magiccart_block_left', true);
-			$bottom = get_post_meta($this->_id, '_magiccart_block_bottom', true);
-		   
-			if($top){
-				if(isset($value[$top]['value']) && $value[$top]['status'] ){
-					$editorText = $value[$top]['value'];
-					$editorTopDiv = $editorText ? '<div class="mage-column mega-block-top">' . wp_kses_post($editorText) . '</div>' : '';
-				}
-			}
+        $indent = str_repeat("\t", $depth);
+        if(!$depth) $this->_id_parent = $this->_id;
+        if( !$depth && get_post_meta($this->_id, '_magiccart_mega', true)){
+            $value          = get_option('magiccart_block', '');
+            $value          = json_decode($value, true);
+            
+            $editorTopDiv   = '';
+            $editorLeftDiv  = '';
+            
+            $top    = get_post_meta($this->_id, '_magiccart_block_top', true);
+            $right  = get_post_meta($this->_id, '_magiccart_block_right', true);
+            $left   = get_post_meta($this->_id, '_magiccart_block_left', true);
+            $bottom = get_post_meta($this->_id, '_magiccart_block_bottom', true);
+           
+            if($top){
+                if(isset($value[$top]['value']) && $value[$top]['status'] ){
+                    $editorText = $value[$top]['value'];
+                    $editorTopDiv = $editorText ? '<div class="mage-column mega-block-top">' . wp_kses_post($editorText) . '</div>' : '';
+                }
+            }
 
-			if($right){
-				if(isset($value[$right]['value']) && $value[$right]['status'] ){
-					$editorText = $value[$right]['value'];
-					$this->_editorRight = $editorText ? '<div class="mage-column mega-block-right">' . wp_kses_post($editorText) . '</div>' : '';
-				}
-			}
+            if($right){
+                if(isset($value[$right]['value']) && $value[$right]['status'] ){
+                    $editorText = $value[$right]['value'];
+                    $this->_editorRight = $editorText ? '<div class="mage-column mega-block-right">' . wp_kses_post($editorText) . '</div>' : '';
+                }
+            }
 
-			if($left){
-				if(isset($value[$left]['value']) && $value[$left]['status'] ){
-					$editorText = $value[$left]['value'];
-					$editorLeftDiv = $editorText ? '<div class="mage-column mega-block-left">' . wp_kses_post($editorText) . '</div>' : '';
-				}
-			}
+            if($left){
+                if(isset($value[$left]['value']) && $value[$left]['status'] ){
+                    $editorText = $value[$left]['value'];
+                    $editorLeftDiv = $editorText ? '<div class="mage-column mega-block-left">' . wp_kses_post($editorText) . '</div>' : '';
+                }
+            }
 
-			if($bottom){
-				if(isset($value[$bottom]['value']) && $value[$bottom]['status'] ){
-					$editorText = $value[$bottom]['value'];
-					$this->_editorBottom = $editorText ? '<div class="mage-bottom"><div class="mage-column mega-block-bottom">' . wp_kses_post($editorText) . '</div></div>' : '';
-				}
-			}
-			$output .=  '<div class="level-top-mega" >
-							<div class="content-mega" >
-								'. $editorTopDiv .'
-									<div class="content-mega-horizontal" >
-										'.$indent  . $editorLeftDiv.
-											'<ul class="submenu mage-column cat-mega level'.$depth.'">';
-		}else{
-			$output .= "$indent <ul class=' submenu level{$depth}'>";
-		}
-		
+            if($bottom){
+                if(isset($value[$bottom]['value']) && $value[$bottom]['status'] ){
+                    $editorText = $value[$bottom]['value'];
+                    $this->_editorBottom = $editorText ? '<div class="mage-bottom"><div class="mage-column mega-block-bottom">' . wp_kses_post($editorText) . '</div></div>' : '';
+                }
+            }
+            $output .=  '<div class="level-top-mega" >
+                            <div class="content-mega" >
+                                '. $editorTopDiv .'
+                                    <div class="content-mega-horizontal" >
+                                        '.$indent  . $editorLeftDiv.
+                                            '<ul class="submenu mage-column cat-mega level'.$depth.'">';
+        }else{
+            $output .= "$indent <ul class=' submenu level{$depth}'>";
+        }
+        
         $GLOBALS[$args->mobile] .= "$indent <ul class=' submenu level{$depth}'>";
     }
 
     public function end_lvl( &$output, $depth = 0, $args = array() ) {
-	
+    
         $indent     = str_repeat("\t", $depth);
 
         if(!$depth && get_post_meta($this->_id_parent, '_magiccart_mega', true) ){
-			$output .= $indent;
-			if($this->_editorBottom != ""){
-				$output .= "<li>{$this->_editorBottom }</li>";
-			}
-			
-			$output .=  "</ul>{$this->_editorRight }</div></div></div>\n";
+            $output .= $indent;
+            if($this->_editorBottom != ""){
+                $output .= "<li>{$this->_editorBottom }</li>";
+            }
+            
+            $output .=  "</ul>{$this->_editorRight }</div></div></div>\n";
                 
             $this->_editorBottom    = "";
             $this->_editorRight     = "";
@@ -205,14 +194,14 @@ class Menu extends \Walker_Nav_Menu{
             
             $class_names = $class_names ? ' class="cat ' . esc_attr( $class_names ) . '"' : '';
             $output     .= $indent . '<li '.   $class_names .' ' .$data_options .'>';
-        	$item_output .= '<a class="level-top" '. $dataImage . $attributes .'>';
+            $item_output .= '<a class="level-top" '. $dataImage . $attributes .'>';
             $item_output .= isset($args->link_before) ? $args->link_before : '';
             $item_output .= $icon . '<span>' .$title . $hotNew . '</span>';
             $item_output .= isset($args->link_after) ? $args->link_after : '';
         }else{
             $class_names = $class_names ? ' class=" ' . esc_attr( $class_names ) . '"' : '';
             $output .= $indent . '<li ' . $class_names .'>'. $img  ;
-        	$item_output .= '<a '. $dataImage . $attributes .'>';
+            $item_output .= '<a '. $dataImage . $attributes .'>';
             $item_output .= $args->link_before . '<span>' .$title . '</span>' . $args->link_after;
         }
         
@@ -222,7 +211,7 @@ class Menu extends \Walker_Nav_Menu{
         $item_output .= isset($args->after) ? $args->after : '';
 
         $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
-        if(isset($args->mobile)) $GLOBALS[$args->mobile] .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+        $GLOBALS[$args->mobile] .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
     }
 
     public function end_el( &$output, $item, $depth = 0, $args = array() ) {
@@ -234,17 +223,17 @@ class Menu extends \Walker_Nav_Menu{
             $n = "\n";
         }
         $output .= "</li>{$n}";
-         if(isset($args->mobile)) $GLOBALS[$args->mobile] .= "</li>{$n}";;
+        $GLOBALS[$args->mobile] .= "</li>{$n}";;
     }
     
     public function setMenu($args){
         if($args['theme_location'] != "mobile-menu"){
             $args['walker']     = $this; 
         }
-    	   	
-    	//$args['items_wrap'] = '<ul id="%1$s" class="%2$s menu nav-desktop ' . $args['theme_location'] . '">%3$s</ul>';
-    	$args['container']  = '';
-    	return $args;
+            
+        //$args['items_wrap'] = '<ul id="%1$s" class="%2$s menu nav-desktop ' . $args['theme_location'] . '">%3$s</ul>';
+        $args['container']  = '';
+        return $args;
     }
 }
 

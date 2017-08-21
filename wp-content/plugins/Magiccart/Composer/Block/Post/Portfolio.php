@@ -3,10 +3,10 @@ namespace Magiccart\Composer\Block\Post;
 use Magiccart\Composer\Block\Shortcode;
 
 class Portfolio extends Shortcode{
-    // **********************************************************************//
-    // alothemes Portfolio
-    // **********************************************************************//
-   public function initShortcode( $atts, $content = null ){
+
+    protected $_portfolio = array();
+
+    public function initShortcode( $atts, $content = null ){
         $this->addData($atts);
 
         if($this->getData('portfolio_collection')){
@@ -43,4 +43,30 @@ class Portfolio extends Shortcode{
         }
         return __("Please select !", 'alothemes');
     }
+
+    public function getTabs(){
+        $portfolioId     = $this->getData('portfolioId');
+        $visible = "visible-" . $this->getData("visible");
+        $args = array(
+                    'type'          => 'portfolio',
+                    'child_of'      => 0,
+                    'orderby'       => 'id',
+                    'order'         => 'ASC',
+                    'hide_empty'    => false,
+                    'hierarchical'  => 1,
+                    'taxonomy'      => 'portfolio_category',
+                    'pad_counts'    => false,
+
+                );
+        $categories = get_categories( $args );
+        $titleTab = array();
+        $titleTab['all']  = __("All Portfolio", 'alothemes');
+            foreach ($categories as  $value) {
+            if(in_array($value->term_id, $portfolioId)){
+                $titleTab[$value->term_id] = $value->name;
+            }
+        }
+        return $titleTab;        
+    }
+
 }

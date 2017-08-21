@@ -2,10 +2,6 @@
 namespace Magiccart\Composer\Model;
 
 class Vccomposer{
-	
-    public function __construct(){
-        
-    }
     
     // **********************************************************************//
     // get Category + parent-child category

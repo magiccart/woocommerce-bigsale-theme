@@ -3,9 +3,7 @@ namespace Magiccart\Composer\Block\Post;
 use Magiccart\Composer\Block\Shortcode;
 
 class Desandro extends Shortcode{
-    // **********************************************************************//
-    // alothemes Desandro
-    // **********************************************************************//
+
     public function initShortcode( $atts, $content = null ){
     	if(is_array($atts)){
     		$this->addData($atts );
@@ -31,5 +29,3 @@ class Desandro extends Shortcode{
             return $this->toHtml();
     }
 }
-
-

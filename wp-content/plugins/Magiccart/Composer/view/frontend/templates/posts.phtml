@@ -1,8 +1,20 @@
 <?php 
-	$options  = $this->getOptions();
-	$selector = 'alo-content-'.rand(0,999999999);
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-13 18:45:34
+ * @@Modify Date: 2017-08-13 21:06:51
+ * @@Function:
+ */
+
+$options  = $this->getOptions();
+$selector = 'alo-content-'.rand(0,999999999);
+$classer = $this->getData('el_class');
 ?>
-<div class="box-blog">
+<div class="box-blog <?php echo $classer ?>">
     <div class="<?php echo $selector ?>">
         <h3 class="title"><?php echo __('Lastest blog', 'alothemes'); ?></h3>
     	<div class="magicpost" <?php foreach($options as $key => $value){?>
@@ -35,3 +47,4 @@ jQuery(document).ready(function(){
     })(jQuery);
 });
 </script>
+

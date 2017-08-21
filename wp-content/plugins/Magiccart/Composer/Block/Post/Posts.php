@@ -6,7 +6,7 @@
  * @license     http://www.magiccart.net/license-agreement.html
  * @Author: DOng NGuyen<nguyen@dvn.com>
  * @@Create Date: 2017-07-24 11:34:47
- * @@Modify Date: 2017-07-24 12:03:01
+ * @@Modify Date: 2017-08-13 18:27:17
  * @@Function:
  */
 
@@ -14,9 +14,9 @@ namespace Magiccart\Composer\Block\Post;
 use Magiccart\Composer\Block\Shortcode;
 
 class Posts extends Shortcode{
-    // **********************************************************************//
-    // alothemes Post
-    // **********************************************************************//
+
+    protected $_post = array();
+
     public function initShortcode( $atts, $content = null ){
         $this->addData($atts);
         

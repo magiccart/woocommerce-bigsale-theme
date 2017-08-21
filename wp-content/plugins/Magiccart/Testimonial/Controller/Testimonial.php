@@ -1,4 +1,15 @@
 <?php
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-09 23:20:32
+ * @@Modify Date: 2017-08-10 20:38:03
+ * @@Function:
+ */
+
 namespace Magiccart\Testimonial\Controller;
 
 use Magiccart\Core\Controller\Adminhtml\Action;
@@ -6,8 +17,16 @@ use Magiccart\Core\Controller\Adminhtml\Action;
  class Testimonial extends Action {
  	public function __construct(){
  		add_action('init', array($this, 'testimonial_init'));
- 		add_action( 'add_meta_boxes', array($this, 'wpdocs_register_meta_boxes') );
- 		add_action( 'save_post', array($this, 'wpdocs_save_meta_box'), 10, 3 );
+ 		if(!is_admin()) return;
+ 		add_action( 'add_meta_boxes', array($this, 'register_meta_boxes') );
+ 		add_action( 'save_post', array($this, 'save_meta_box'), 10, 3 );
+        add_submenu_page(
+            'magiccart',
+            'Testimonial',
+            'Testimonial',
+            'manage_options',
+            'edit.php?post_type=testimonial'
+        );
  	}
 
  	public function testimonial_init(){
@@ -35,7 +54,7 @@ use Magiccart\Core\Controller\Adminhtml\Action;
 			'public'             => true,
 			'publicly_queryable' => true,
 			'show_ui'            => true,
-			'show_in_menu'       => true,
+			'show_in_menu'       => false, // show in main admin set true
 			'query_var'          => true,
 			'rewrite'            => array( 'slug' => 'testimonial' ),
 			'capability_type'    => 'post',
@@ -48,7 +67,7 @@ use Magiccart\Core\Controller\Adminhtml\Action;
 		register_post_type( 'testimonial', $args );
 	}
 
- 	public function wpdocs_register_meta_boxes() {
+ 	public function register_meta_boxes() {
 	    add_meta_box( 'meta-box-name', __( 'Name', 'alothemes' ), array($this, 'callback_name'), 'testimonial' );
 	    add_meta_box( 'meta-box-company', __( 'Company', 'alothemes' ), array($this, 'callback_company'), 'testimonial' );
 	    add_meta_box( 'meta-box-email', __( 'Email', 'alothemes' ), array($this, 'callback_email'), 'testimonial' );
@@ -110,7 +129,7 @@ use Magiccart\Core\Controller\Adminhtml\Action;
 	}
 	 
 	
-	public function wpdocs_save_meta_box( $post_id, $post, $update  ) {
+	public function save_meta_box( $post_id, $post, $update  ) {
 		if(isset($_POST['testimonial-name'])){
 			update_post_meta($post_id, 'testimonial-name', $_POST['testimonial-name']);
 		}
@@ -131,3 +150,4 @@ use Magiccart\Core\Controller\Adminhtml\Action;
 		}
 	}
 }
+

@@ -1,4 +1,15 @@
 <?php 
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-03 23:09:57
+ * @@Modify Date: 2017-08-14 23:26:52
+ * @@Function:
+ */
+
     $options = $this->getOptions();  
 ?>
 <div class="box-content catalog-type megashop">
@@ -38,28 +49,33 @@
                 <!-- <div class="row"> -->
                         <?php 
                             if($this->getData('shortcode_left') != "0"){
+                                $_shortcode = '[magiccart_shortcode class="Magiccart\\\Cms\\\Block\\\Block"  identifier="' .$this->getData('shortcode_left') . '"]';
                                 echo '<div class="banner-featured"><div class="left-category-editor">';
-                                     do_shortcode('[magiccartBlock text=' .$this->getData('shortcode_left') . ']');
+                                    do_shortcode($_shortcode);
                                 echo '</div></div>';
                             }
                         ?>
                     
                         <div class="ajax_loading" style="display:none" data-url="<?php echo admin_url( 'admin-ajax.php' ); ?>"  data-action="magiccart_catalog"></div>
                     <div class="content-products-featured">
-                        <div class="content-products" <?php foreach($options as $key => $value){?>
-                                                               data-<?php echo $key; ?> = '<?php echo $value ?>'
-                                                       <?php } ?> > 
+                        <div class="content-products" 
+                            <?php foreach($options as $key => $value){?>
+                                       data-<?php echo $key; ?> = '<?php echo $value ?>'
+                               <?php } ?> 
+                            > 
                             <?php
+                                $grid = $this->getTemplateFile('catalog/grid.phtml'); 
                                 foreach($this->_products as $key => $collection){ 
-                                    include "catalog/grid.phtml"; 
+                                    include $grid; 
                                 }
                             ?>
                         </div>
                     </div>
                     <?php 
                         if($this->getData('shortcode_bottom') != "0"){
+                            $_shortcode = '[magiccart_shortcode class="Magiccart\\\Cms\\\Block\\\Block"  identifier="' .$this->getData('shortcode_bottom') . '"]';
                             echo '<div class="bottom-category-editor">';
-                                 do_shortcode('[magiccartBlock text=' .$this->getData('shortcode_bottom') . ']');
+                                do_shortcode($_shortcode);
                             echo '</div>';
                         }
                     ?>
@@ -68,3 +84,4 @@
         </div> 
     </div>
 </div>
+

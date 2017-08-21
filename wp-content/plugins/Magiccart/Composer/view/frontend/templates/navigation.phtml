@@ -1,0 +1,52 @@
+<?php 
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-12 11:29:45
+ * @@Modify Date: 2017-08-12 18:19:15
+ * @@Function:
+ */
+
+$menu       = $this->getData('menu');
+$isVertical = $this->getData('vertical');
+$depth      = $this->getData('depth');
+$mobile     = $this->getData('mobile');
+$classer   = $this->getData('el_class');
+$_type = has_nav_menu($menu) ? 'theme_location' : 'menu';
+global $outputmobile;
+$outputmobile = ''; 
+?>
+<?php if(!$isVertical) : ?>
+    <div class="magicmenu clearfix <?php echo $classer ?>">                                   
+        <?php 
+            wp_nav_menu(array(
+                    $_type    => $menu,
+                    'items_wrap'        => '<ul id="%1$s" class="%2$s nav-desktop sticker">%3$s</ul>',
+                    'mobile'            => "outputmobile" // name variable global $outputmobile
+            ));  
+
+            // echo '<div class="message error woocommerce-error">' . __( "Menu $menu not exist", "alothemes" ) . '</div>';
+        ?>  
+    </div>
+<?php else : ?>
+    <div class="vmagicmenu clearfix <?php echo $classer ?>">
+        <div class="block-title block-title-vmagicmenu v-title">
+            <strong>
+                <span class="fa fa-bars"></span>
+                <span class="vmagicmenu-subtitle"><?php echo __('Categories', 'alothemes'); ?></span>
+            </strong>
+        </div>
+        <?php
+            wp_nav_menu(array(
+                    $_type    => $menu,
+                    'items_wrap'        => '<ul id="%1$s" class="%2$s nav-desktop sticker">%3$s
+                                                <li class="all-cat" style="display:none;"><span>All Categories</span><span style="display: none;">Close</span></li>
+                                            </ul>',
+                    'mobile'            => "outputmobile"  // name variable global $outputmobile
+            ));
+         ?>
+    </div>
+<?php endif ?>

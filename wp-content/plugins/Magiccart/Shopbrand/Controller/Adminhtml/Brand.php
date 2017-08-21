@@ -65,7 +65,7 @@ class Brand {
 	    			$brands = array_merge($brands, $newBrand);
                     $brands = json_encode($brands);
 	    			update_option('magiccart_brand', $brands);
-                    wp_redirect("?page=" . $_GET['page'] ."&modul=shopbrand&block=grid&view=gird" );
+                    wp_redirect("?page=" . $_GET['page'] ."&module=shopbrand&block=grid&view=gird" );
 	    		}
 	    		
 	    	}else{
@@ -98,7 +98,7 @@ class Brand {
 
         $brands = json_encode($brands);
     	update_option('magiccart_brand', $brands);
-    	wp_redirect("?page=" . $_GET['page'] ."&modul=shopbrand&block=grid&view=gird" );
+    	wp_redirect("?page=" . $_GET['page'] ."&module=shopbrand&block=grid&view=gird" );
     }
     
     /* Delete */
@@ -110,7 +110,7 @@ class Brand {
     	if(isset($brands[$key])) unset($brands[$key]);
         $brands = json_encode($brands);
     	update_option('magiccart_brand', $brands);
-    	wp_redirect("?page=" . $_GET['page']."&modul=shopbrand&block=grid&view=grid" );
+    	wp_redirect("?page=" . $_GET['page']."&module=shopbrand&block=grid&view=grid" );
     }
     
     /* VN => Us */
@@ -147,4 +147,4 @@ class Brand {
         
         return $str;
     }
-}
+}

@@ -1,13 +1,39 @@
 <?php
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-09 23:30:25
+ * @@Modify Date: 2017-08-10 20:36:20
+ * @@Function:
+ */
+
 namespace Magiccart\Portfolio\Controller;
 
 use Magiccart\Core\Controller\Adminhtml\Action;
 
- class Portfolio extends Action {
+class Portfolio extends Action {
  	public function __construct(){
  		add_action('init', array($this, 'portfolio_init'));
- 		add_action( 'save_post', array($this, 'wpdocs_save_meta_box'), 10, 3 );
- 		add_action( 'add_meta_boxes', array($this, 'wpdocs_register_meta_boxes') );
+ 		if(!is_admin()) return;
+ 		add_action( 'save_post', array($this, 'save_meta_box'), 10, 3 );
+ 		add_action( 'add_meta_boxes', array($this, 'register_meta_boxes') );
+        add_submenu_page(
+            'magiccart',
+            'Portfolio',
+            'Portfolio',
+            'manage_options',
+            'edit.php?post_type=portfolio'
+        );
+        add_submenu_page(
+            'magiccart',
+            'Portfolio Categories',
+            'Portfolio Categories',
+            'manage_options',
+            'edit-tags.php?taxonomy=portfolio_category&post_type=portfolio'
+        );
  	}
 
  	public function portfolio_init(){
@@ -35,7 +61,7 @@ use Magiccart\Core\Controller\Adminhtml\Action;
 			'public'             => true,
 			'publicly_queryable' => true,
 			'show_ui'            => true,
-			'show_in_menu'       => true,
+			'show_in_menu'       => false, // show in main admin set true
 			'query_var'          => true,
 			'rewrite'            => array( 'slug' => 'portfolio' ),
 			'capability_type'    => 'post',
@@ -69,13 +95,13 @@ use Magiccart\Core\Controller\Adminhtml\Action;
 	    ));
 	}
 
-	public function wpdocs_register_meta_boxes() {
+	public function register_meta_boxes() {
 	    add_meta_box( 'meta-box-skill-needed', __( 'Skill needed', 'alothemes' ), array($this, 'callback_skill_needed'), 'portfolio' );
 	    add_meta_box( 'meta-box-url', __( 'Url', 'alothemes' ), array($this, 'callback_url'), 'portfolio' );
 	    add_meta_box( 'meta-box-copyright', __( 'Copyright', 'alothemes' ), array($this, 'callback_copyright'), 'portfolio' );
 	}
 
-	public function wpdocs_save_meta_box( $post_id, $post, $update  ) {
+	public function save_meta_box( $post_id, $post, $update  ) {
 		if(isset($_POST['portfolio-skill-needed'])){
 			update_post_meta($post_id, 'portfolio-skill-needed', $_POST['portfolio-skill-needed']);
 		}
@@ -102,3 +128,4 @@ use Magiccart\Core\Controller\Adminhtml\Action;
 	    echo  "<input id='mc-copyright' name='portfolio-copyright' type='text' value='$metaCopyright' style='width:100%;' />";
 	}
 }
+

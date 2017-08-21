@@ -1,29 +1,50 @@
 <?php
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-03 17:22:24
+ * @@Modify Date: 2017-08-14 14:54:48
+ * @@Function:
+ */
+ 
 namespace Magiccart\Core\Controller;
-
+use Magiccart\Core\Block\Shortcode;
 use Magiccart\Core\Model\System\Theme\Option;
-// use Magiccart\Core\Block\Options;
+// use Magiccart\Core\Block\Themecfg;
 
 class Core {
 	public $_templateTheme = "bigsale";
 	public $_option;
     public function __construct(){
-    	$this->_option = new Option();
-    	$opt = $this->_option->getName();
-        add_action('tgmpa_register', array($this, 'magiccart_plugin_activation') );
+        $this->_option = new Option();
+        $opt = $this->_option->getName();
 
-        //add_action('init', array($this, 'activateTheme'));
-        add_action('init', array($this, 'changeOptions'));
-       
-        $tgm = MAGICCART_DIR .'Core/Block/includes/class-tgm-plugin-activation.php';
-        if( file_exists($tgm) ) require_once ($tgm); 
-        add_action('wp_enqueue_scripts', array($this, 'add_fontend_web'));
+        if(!is_admin()){
+            // new \Magiccart\Core\Controller\Index ;
+            new Shortcode();
+            add_action('wp_enqueue_scripts', array($this, 'add_fontend_web'));
+        }else{
+            // new Themecfg();
+            // new \Magiccart\Core\Controller\Adminhtml\Index;
+            add_action('tgmpa_register', array($this, 'magiccart_plugin_activation') );
+
+            //add_action('init', array($this, 'activateTheme'));
+            add_action('init', array($this, 'changeOptions'));
+           
+            $tgm = MAGICCART_DIR .'Core/Block/includes/class-tgm-plugin-activation.php';
+            if( file_exists($tgm) ) require_once ($tgm); 
+        }
+
     } 
+
+
     public function get_url($link = ""){
     	$tmp = explode('\\', get_class($this));
     	return  plugins_url() . '/Magiccart/' . $tmp[1] . '/view/' . $link;
     }
-    
     
     public function magiccart_plugin_activation() {
         //  plugin active
@@ -39,12 +60,12 @@ class Core {
                 'required'  => true,
                 'version'   => '3.0.0'
             ),
-             array(
-                'name'                  => 'Revolution Slider',
-                'slug'                  => 'revslider',
-                'version'               => '4.6.3',
-                'required'              => true,
-            ),
+            //  array(
+            //     'name'                  => 'Revolution Slider',
+            //     'slug'                  => 'revslider',
+            //     'version'               => '4.6.3',
+            //     'required'              => true,
+            // ),
             array(
                 'name'                  => 'WPBakery Visual Composer', // The plugin name
                 'slug'                  => 'js_composer', // The plugin slug (typically the folder name)
@@ -150,3 +171,4 @@ class Core {
         wp_enqueue_script('jquery-cookie-master');
      }
 }
+

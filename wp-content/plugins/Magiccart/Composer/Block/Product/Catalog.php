@@ -1,11 +1,19 @@
 <?php
-namespace Magiccart\Composer\Block\Product;
-use Magiccart\Composer\Block\Shortcode;
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-13 17:51:26
+ * @@Modify Date: 2017-08-13 18:42:28
+ * @@Function:
+ */
 
-class Catalog extends Shortcode{
-    // **********************************************************************//
-    // alothemes Catalog
-    // **********************************************************************//
+namespace Magiccart\Composer\Block\Product;
+
+class Catalog extends Products{
+
     public function initShortcode( $atts, $content = null ){
         global $woocommerce;
         $this->nullData();
@@ -47,7 +55,7 @@ class Catalog extends Shortcode{
             }
             return $this->toHtml();
         }
-        return __("Please select !", 'alothemes');
+        return __("Collection not yet select!", 'alothemes');
     }
     
     public function defaultProduct(){

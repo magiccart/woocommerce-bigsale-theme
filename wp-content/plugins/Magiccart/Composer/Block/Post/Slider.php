@@ -3,9 +3,9 @@ namespace Magiccart\Composer\Block\Post;
 use Magiccart\Composer\Block\Shortcode;
 
 class Slider extends Shortcode{
-    // **********************************************************************//
-    // alothemes Slider
-    // **********************************************************************//
+
+    protected $_sliders = array();
+
     public function initShortcode( $atts, $content = null ){
 
         $this->addData($atts);
@@ -28,3 +28,4 @@ class Slider extends Shortcode{
         return $this->toHtml();
     }
 }
+

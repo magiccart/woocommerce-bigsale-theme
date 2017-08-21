@@ -55,7 +55,7 @@ class Action{
         $this->_template =  $file ;
     }
 
-    protected function getTemplate($file){
+    protected function getTemplate(){
         return $this->_template;
     }
     protected function getOptions($key = ''){
@@ -68,4 +68,4 @@ class Action{
         return $GLOBALS[$opt];
     }
     
-}
+}

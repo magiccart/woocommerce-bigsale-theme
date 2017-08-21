@@ -1,12 +1,19 @@
 <?php
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-10 11:09:08
+ * @@Modify Date: 2017-08-15 18:33:01
+ * @@Function:
+ */
+ 
 namespace Magiccart\Composer\Block\Adminhtml\Vc\Product;
-use Magiccart\Composer\Block\Adminhtml\Vc;
 
-class Catalog extends Vc{
-    
-    // **********************************************************************//
-    // alothemes Catalog
-    // **********************************************************************//
+class Catalog extends Products{
+
 	public function initMap()
 	{
   		$listCat = array_flip($this->getCategories());
@@ -20,30 +27,38 @@ class Catalog extends Vc{
 	                    'save_always' 	=> true,
 	                ),
 	                array(
-	                    "type"      	=> "multi_select",
-	                    "heading"   	=> __("Product Collection : <span style='color:red;'>*</span> ", 'alothemes'),
-	                    "param_name" 	=> "product_collection",
+	                    'type'      	=> "multiselect",
+	                    'heading'   	=> __("Product Collection : <span style='color:red;'>*</span> ", 'alothemes'),
+	                    'param_name' 	=> "product_collection",
 	                    'value' 		=> $this->get_type("name"),
 	                ),
 	                array(
-	                    'type'          => 'multi_select',
+	                    'type'          => 'multiselect',
 	                    'heading'       => __( "Categories <span style='color:red;'>*</span> :", 'alothemes' ),
 	                    'value'         => $this->getCategories(),
 	                    'param_name'    => 'categories',
 	                    'description'   => __( 'Product Categories list', 'alothemes' ),
 	                ),
 	                array(
-	                    "type"      	=> "dropdown",
-	                    "heading"   	=> __("Product Activated : ", 'alothemes'),
-	                    "param_name" 	=> "product_activated",
+	                    'type'      	=> "dropdown",
+	                    'heading'   	=> __("Product Activated : ", 'alothemes'),
+	                    'param_name' 	=> "product_activated",
 	                    'value' 		=>  $this->get_type(),
 	                    'save_always' 	=> true,
 	                ),
 	                
 	            );
         
-        $params = array_merge($temp, $this->get_settings(), $this->settingShow(), $this->defaultBlock());
+        $params = array_merge(
+        	$temp, 
+        	$this->get_settings(), 
+        	$this->get_responsive(), 
+        	$this->settingShow(), 
+        	$this->defaultBlock(), 
+        	$this->get_templates()
+        );
         
 		$this->add_VcMap($params);
 	}	
 }
+

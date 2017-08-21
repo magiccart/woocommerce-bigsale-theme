@@ -1,11 +1,22 @@
 <?php
 /*
  Plugin Name: Magiccart
- Plugin URI: http://wordpress.org
+ Plugin URI: http://alothemes.com
  Description: Plugins Magiccart
  Author: alothemes.com
  Version: 1.0
  Author URI: http://alothemes.com/
+ */
+
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-03 17:19:56
+ * @@Modify Date: 2017-08-15 21:54:30
+ * @@Function:
  */
 
 define('MAGICCART_URL'            , plugin_dir_url(__FILE__));            // URL
@@ -19,22 +30,16 @@ define('MAGICCART_DIR'            , ABSPATH . 'wp-content/plugins/Magiccart/'); 
 //include_once( ABSPATH . 'wp-content/plugins/redux-framework/ReduxCore/inc/class.redux_api.php' );
 //require_once( plugin_dir_path( __FILE__ ) . 'custom_media_fields.php' );
 
-// file return include
-/* array(
-		'Magiccart\Widgets\Block\Blogcategory\Widgets' => array(
-				
-		)
-		
-) */
-
 
 use Magiccart\Core\Controller\Core;
+use Magiccart\Core\Controller\Header;
 use Magiccart\Testimonial\Controller\Testimonial;
 use Magiccart\Portfolio\Controller\Portfolio;
+use Magiccart\Core\Controller\Footer;
 use Magiccart\Megamenu\Controller\Megamenu;
-use Magiccart\Cms\Controller\Adminhtml\Cms;
 use Magiccart\Widgets\Controller\Widgets;
 use Magiccart\Composer\Controller\Composer;
+use Magiccart\Cms\Controller\Adminhtml\Cms;
 use Magiccart\Shopbrand\Controller\Adminhtml\Shopbrand;
 use Magiccart\Magicslider\Controller\Adminhtml\Magicslider;
 use Magiccart\Import\Controller\Adminhtml\Import;
@@ -46,47 +51,74 @@ use Magiccart\Import\Controller\Adminhtml\Import;
 spl_autoload_register( 'maggiccart_autoloader' ); 
 function maggiccart_autoloader( $class_name ) {
     if ( false !== strpos( $class_name, 'Magiccart' ) ) {
-        require_once  ABSPATH . 'wp-content'. DIRECTORY_SEPARATOR .'plugins'. DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
+        $class_file = ABSPATH . 'wp-content'. DIRECTORY_SEPARATOR .'plugins'. DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
+        if(file_exists($class_file)) require_once  $class_file;
+        // else echo '<div class="message error woocommerce-error">' . __( "Class $class_name not exist", "alothemes" ) . '</div>';
     }   
 }
 
 class Magiccart{
+
+    /**
+     * Core singleton class
+     * @var self - pattern realization
+     */
+    private static $_instance;
+
     private $_menu_slug         = 'magiccart';
     public function __construct(){
-        add_action('admin_menu', array($this, '_setActiveMenu'));
-        add_action("plugins_loaded", array($this, 'init'), 99);
-        
-        if (isset($_GET['page']) && $_GET['page'] == 'my_plugin_page') {
-        	add_action('admin_print_scripts', array($this, 'my_admin_scripts') );
-        	add_action('admin_print_styles', array($this, 'my_admin_styles') );
-        }
-        
+
+        add_action("plugins_loaded", array($this, 'init'), 55); // 99
+
         if(is_admin()){
-        	add_action( 'admin_enqueue_scripts', array($this, 'load_wp_media_files') );
+            // if (isset($_GET['page']) && $_GET['page'] == 'magiccart') {
+            //     add_action('admin_print_scripts', array($this, 'admin_scripts') );
+            //     add_action('admin_print_styles', array($this, 'admin_styles') );
+            // }
+            add_action( 'admin_enqueue_scripts', array($this, 'load_wp_media_files') );
+            add_action('admin_menu', array($this, '_setActiveMenu'));
         }
+    }
+
+    /**
+     * Get the instane of Magiccart
+     *
+     * @return self
+     */
+    public static function getInstance() {
+        if ( ! ( self::$_instance instanceof self ) ) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
     }
     
     public function init(){
-        new Cms();
-        new Testimonial();
-        new Portfolio();
+
         new Core();
-        $composer    = WP_PLUGIN_DIR . "/js_composer/js_composer.php";
-        $woocommerce = WP_PLUGIN_DIR . "/woocommerce/woocommerce.php";
-        
-        if(file_exists($composer) && file_exists($woocommerce)){
-        	if(is_plugin_active("js_composer/js_composer.php") && is_plugin_active("woocommerce/woocommerce.php")){
-        		new Composer();
-                new Widgets();
-        		if(is_admin()){
-        			new Shopbrand();
-        		}
-        	}
-        	
+        new Header();
+        new Portfolio();
+        new Testimonial();
+        new Footer();
+        if ( class_exists( 'WooCommerce' ) ) {
+            new Widgets();   
+        } else {
+                // <div class="message error"><p>Color Filters by <a href="https://www.elementous.com" target="_blank">Elementous</a> is enabled but not effective. It requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> plugin in order to work.</p></div>
+                echo '<div class="message error woocommerce-error"><p>' . __('WooCommerce not installed or Activate', 'alothemes') . '</p></div>';
+
         }
+        if ( class_exists( 'Vc_Manager' ) ) {
+            new Composer();
+        } else {
+            echo '<div class="message error woocommerce-error"><p>' . __('Visual Composer not installed or Activate', 'alothemes') . '</p></div>';
+        }
+
+
         // new Megamenu();
         if(is_admin()){
+            new Cms();
             new Magicslider();
+            new Shopbrand();
             new Import();
         }
     }
@@ -97,13 +129,11 @@ class Magiccart{
     }
     
     
-    public function my_admin_scripts() {
+    public function admin_scripts() {
     	wp_enqueue_script('media-upload');
     	wp_enqueue_script('thickbox');
-    	wp_register_script('my-upload', WP_PLUGIN_URL.'/my-script.js', array('jquery','media-upload','thickbox'));
-    	wp_enqueue_script('my-upload');
     }
-    public function my_admin_styles() {
+    public function admin_styles() {
     	wp_enqueue_style('thickbox');
     }
     public function load_wp_media_files() {
@@ -111,12 +141,7 @@ class Magiccart{
     }   
 }
 
-function init(){
-    new Magiccart();    
+global $magiccart;
+if ( ! $magiccart ) {
+    $magiccart = Magiccart::getInstance();
 }
-add_action("plugins_loaded", 'init', 55);
-
-
-
-
-

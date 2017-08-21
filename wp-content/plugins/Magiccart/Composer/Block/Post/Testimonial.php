@@ -3,9 +3,11 @@ namespace Magiccart\Composer\Block\Post;
 use Magiccart\Composer\Block\Shortcode;
 
 class Testimonial extends Shortcode{
-    // **********************************************************************//
-    // alothemes Testimonial
-    // **********************************************************************//
+
+    protected $_testimonial = array();
+
+    protected $_sliders = array();
+
     public function initShortcode( $atts, $content = null ){
         $this->addData($atts);
         
@@ -28,3 +30,4 @@ class Testimonial extends Shortcode{
         return $this->toHtml();
     }
 }
+

@@ -158,7 +158,10 @@ jQuery( document ).ready(function($) {
 
 // Add by DVN
 jQuery( document ).ready(function($) {
-	$(".color, .alo-color").attr("data-hex", true).width("116px").mColorPicker(); //$(".color").mColorPicker();
+	$(".color, .alo-color").not(".mColorPicker").attr("data-hex", true).width("116px").mColorPicker(); //$(".color").mColorPicker();
+	jQuery(document).on( "click", ".alodesign .scalable.add ", function() {
+		$(".color, .alo-color").not(".mColorPicker").attr("data-hex", true).width("116px").mColorPicker(); //$(".color").mColorPicker();
+	});
   	jQuery(document).on({ 
   		mouseover: function() {$.fn.mColorPicker.events();} 
   	});

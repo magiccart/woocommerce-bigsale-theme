@@ -1,21 +1,29 @@
 <?php
-namespace Magiccart\Composer\Block\Adminhtml\Vc\Product;
-use Magiccart\Composer\Block\Adminhtml\Vc;
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-10 11:09:08
+ * @@Modify Date: 2017-08-15 18:33:10
+ * @@Function:
+ */
 
-class Categories extends Vc{
-    // **********************************************************************//
-    // alothemes Categories
-    // **********************************************************************//
+namespace Magiccart\Composer\Block\Adminhtml\Vc\Product;
+
+class Categories extends Products{
+	
     public function initMap(){
         $temp = array(
         			array(
-	        			"type"          => "textfield",
-	        			"heading"       => __("Title : ", 'alothemes'),
-	        			"param_name"    => "title",
+	        			'type'          => "textfield",
+	        			'heading'       => __("Title : ", 'alothemes'),
+	        			'param_name'    => "title",
 	        			'save_always' 	=> true,
 		        	),
 	                array(
-	                    'type'          => 'multi_select',
+	                    'type'          => 'multiselect',
 	                    'heading'       => __( 'Categories <span style="color:red;">*</span> : ', 'alothemes' ),
 	                    'value'         => $this->getCategories(),
 	                    'param_name'    => 'categories',
@@ -29,16 +37,25 @@ class Categories extends Vc{
 	                    'save_always' 	=> true,
 	                ),
 	                array(
-	                    "type"      	=> "dropdown",
-	                    "heading"   	=> __("Product Activated :", 'alothemes'),
-	                    "param_name" 	=> "product_activated",
+	                    'type'      	=> "dropdown",
+	                    'heading'   	=> __("Product Activated :", 'alothemes'),
+	                    'param_name' 	=> "product_activated",
 	                    'value' 		=> array_flip($this->get_type("name")),
 	                    'save_always' 	=> true,
 	                ),
 
 	            );
-        $params = array_merge($temp, $this->get_settings(), $this->settingShow(), $this->defaultBlock());
+        $params = array_merge(
+        	$temp, 
+        	$this->get_settings(), 
+        	$this->get_responsive(), 
+        	$this->settingShow(), 
+        	$this->defaultBlock(), 
+        	$this->get_templates()
+        );
         
         $this->add_VcMap($params);
     }
+
 }
+

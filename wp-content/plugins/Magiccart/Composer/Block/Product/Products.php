@@ -1,11 +1,22 @@
 <?php
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-13 17:49:46
+ * @@Modify Date: 2017-08-14 23:34:47
+ * @@Function:
+ */
+
 namespace Magiccart\Composer\Block\Product;
 use Magiccart\Composer\Block\Shortcode;
 
 class Products extends Shortcode{
-    // **********************************************************************//
-    // aloThemes Product
-    // **********************************************************************//
+    
+    protected $_products = array();
+
     public function initShortcode( $atts, $content = null ){
         global $woocommerce;
         if(!$woocommerce)  return '';
@@ -37,7 +48,7 @@ class Products extends Shortcode{
             return $this->toHtml();
         }
         
-        return __("Please select !", 'alothemes');
+        return __("Collection not yet select!", 'alothemes');
     }
     
     public function defaultProduct(){
@@ -59,16 +70,77 @@ class Products extends Shortcode{
     private function get_type($type_default = "key"){
     	$type = $type_default;
     	$arrType = array(
-    			__('Best Selling', 'alothemes')      => 'best_selling',
-    			__('Featured Products', 'alothemes') => 'featured_product',
-    			__('Top Rate', 'alothemes')          => 'top_rate',
-    			__('Recent Products', 'alothemes')   => 'recent_product',
-    			__('On Sale', 'alothemes')           => 'on_sale',
-    			__('Recent Review', 'alothemes')     => 'recent_review',
-    			__('Product Deals', 'alothemes')     => 'deals'
+			__('Best Selling', 'alothemes')      => 'best_selling',
+			__('Featured Products', 'alothemes') => 'featured_product',
+			__('Top Rate', 'alothemes')          => 'top_rate',
+			__('Recent Products', 'alothemes')   => 'recent_product',
+			__('On Sale', 'alothemes')           => 'on_sale',
+			__('Recent Review', 'alothemes')     => 'recent_review',
+			__('Product Deals', 'alothemes')     => 'deals'
     	);
     	if($type == "key") return $arrType;
     
     	return array_flip($arrType);
-    } 
+    }
+
+    public function get_type_name($key){
+        $arrType = array(
+            __('Best Selling', 'alothemes')      => 'best_selling',
+            __('Featured Products', 'alothemes') => 'featured_product',
+            __('Top Rate', 'alothemes')          => 'top_rate',
+            __('Recent Products', 'alothemes')   => 'recent_product',
+            __('On Sale', 'alothemes')           => 'on_sale',
+            __('Recent Review', 'alothemes')     => 'recent_review',
+            __('Product Deals', 'alothemes')     => 'deals'
+        );
+    
+        $arrType = array_flip($arrType);
+        return $arrType[$key];
+    }
+
+    public function get_products(){
+        $type = (new \ReflectionObject($this))->getShortName();
+        $post = $_POST;
+        define( 'DOING_AJAX', true);
+        $this->addData(array('cart'     => $post["info"]['cart']));
+        $this->addData(array('compare'  => $post["info"]['compare']));
+        $this->addData(array('wishlist' => $post["info"]['wishlist']));
+        $this->addData(array('review'   => $post["info"]['review']));
+        $this->addData(array('number'   => $post["info"]['number']));
+        $this->addData(array('lazy'     => $post["info"]['lazy']));
+
+        $this->_products = array();
+
+        $grid = strtolower($type) . '/grid.phtml';
+        $template = $this->getTemplateFile($grid);
+        $template = str_replace('/view/adminhtml/templates/', '/view/frontend/templates/', $template); 
+        // don't change to string 'adminhtml' and 'frontend'
+        if($type == "Categories"){
+            $this->addData(array('type' => $post["info"]['filter']));
+
+            $this->_products[$post['type']] = $this->_collection->woo_query($this->getData('type'),$this->getData('number'), $post['type']);
+            
+            foreach($this->_products as $key => $collection){
+                include $template;
+            }
+        }else if($type == 'Products'){
+            $this->_products[$post['type']] = $this->_collection->woo_query($post['type'],$this->getData('number'));
+            
+            foreach($this->_products as $key => $collection){
+                include $template;
+            }
+        }else if($type == 'Catalog'){
+            $typeFilter = array("best_selling", 'featured_product', 'top_rate', 'recent_product', 'on_sale', 'recent_review', "deals");
+            if(in_array($post['type'], $typeFilter)){
+                
+                $this->_products[$post['type']] = $this->_collection->woo_query($post['type'],$this->getData('number'), $post['info']['filter'] );
+            }else{
+                $this->_products[$post['type']] = $this->_collection->woo_query("",$this->getData('number'), $post['type']);
+            }
+            foreach($this->_products as $key => $collection){
+                include $template;
+            }
+        }
+    }
+
 }

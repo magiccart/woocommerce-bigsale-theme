@@ -1,12 +1,23 @@
 <?php
+/**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2017-08-10 20:14:51
+ * @@Modify Date: 2017-08-10 23:46:10
+ * @@Function:
+ */
+ 
 $this->prepare_items();
 $page    = $_GET['page'];
-$linkAdd = "?page={$page}&action=add&modul=shopbrand&view=newbrand";
+$linkAdd = "?page={$page}&action=add&module=shopbrand&view=newbrand";
 ?>
 <div class='wrap'>
     <h1>
-        Magiccart Shop Brand
-        <a class="page-title-action"  href="<?php echo $linkAdd; ?>" >New</a>
+        <?php echo __('Magiccart Shop Brand', 'alothemes') ?>
+        <a class="page-title-action"  href="<?php echo $linkAdd; ?>" ><?php echo __('New', 'alothemes') ?></a>
     </h1>
     <form method='post' action='' name='' id=''>
         <?php
@@ -15,3 +26,4 @@ $linkAdd = "?page={$page}&action=add&modul=shopbrand&view=newbrand";
         ?>
     </form>
 </div>
+

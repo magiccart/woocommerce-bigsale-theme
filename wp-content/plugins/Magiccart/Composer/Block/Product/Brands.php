@@ -3,9 +3,9 @@ namespace Magiccart\Composer\Block\Product;
 use Magiccart\Composer\Block\Shortcode;
 
 class Brands extends Shortcode{
-    // **********************************************************************//
-    // alothemes Brands
-    // **********************************************************************//
+
+    protected $_brands = array();
+
     public function initShortcode( $atts, $content = null ){
         $this->nullData();
         $this->addData($atts);
@@ -21,3 +21,4 @@ class Brands extends Shortcode{
         return $this->toHtml();
     }
 }
+

@@ -13,16 +13,22 @@
 .magiccart-block-grid .stt{
 	font-weight: 500;
 }
-.magiccart-block-grid #action , .magiccart-block-grid .action{
-	width: 6%;
-}
-.magiccart-block-grid #published , .magiccart-block-grid .published{
-	width: 5%;
+
+.magiccart-block-grid .name a{
+	display: block;
+	width: 100%;
+	text-align: left;
 }
 .magiccart-block-grid #short_code , .magiccart-block-grid .short_code{
-	width: 12%;
+	width: 45%;
 }
-.magiccart-block-grid .short_code input{
+.magiccart-block-grid .short_code input, .magiccart-block-grid .short_code textarea{
 	width: 100%;
-	text-align: center;
+	text-align: left;
 }
+.magiccart-block-grid #published , .magiccart-block-grid .published{
+	width: 10%;
+}
+.magiccart-block-grid #action , .magiccart-block-grid .action{
+	width: 6%;
+}

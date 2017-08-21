@@ -29,7 +29,7 @@ class Shopbrand extends Action {
 	
 	public function indexAction(){
 		$this->_brand = new Brand();
-		 if(isset($_GET['action']) && $_GET['modul'] == 'shopbrand' && trim($_GET['action']) != '' && ($_GET['action'] == 'edit' || $_GET['action'] == 'add') ){
+		 if(isset($_GET['action']) && $_GET['module'] == 'shopbrand' && trim($_GET['action']) != '' && ($_GET['action'] == 'edit' || $_GET['action'] == 'add') ){
 		 	$edit = new Edit();
 		 	$data = $this->_brand->saveBrand();
 		 	
